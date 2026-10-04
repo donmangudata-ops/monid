@@ -35,9 +35,11 @@ export default defineEndpoint({
         path:
             "/v2/acts/conserving_celerytop~package-registry-metadata-api/runs",
     },
-    // The actor's own default run timeout is 600 s; crates.io is the
-    // slowest registry (about 1.1 s per package at the actor's request pace).
-    timeouts: { runMs: 600_000 },
+    // maxItems allows 1,000 packages and crates.io is the slowest registry
+    // (about 1.1 s per package at the actor's request pace, so roughly 18
+    // minutes for 1,000). The actor's default run timeout is 1,500 s, so
+    // the engine waits the same 1,500 s.
+    timeouts: { runMs: 1_500_000 },
     input: {
         schema: {
             // maxItems is the PRIMARY limiting knob, required at the
