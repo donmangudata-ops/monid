@@ -9,10 +9,10 @@ import { z } from "zod";
  * accepts supersets, so unknown fields pass through.
  */
 export const zPackageRegistryMetadataApiBody = z.object({
-    packageNames: z.array(z.string()).describe(
+    packageNames: z.array(z.string()).max(1000).describe(
         "Add one package name per entry, for example express or @types/node. Put npm:, pypi: or crates: in front of a name to choose its registry, for example pypi:requests. Names without a prefix use the registries chosen under Advanced options.",
     ).optional(),
-    searchQuery: z.string().describe(
+    searchQuery: z.string().max(100).describe(
         "Type a keyword to find packages on npm and crates.io, for example http client. Found packages are added after the names you listed.",
     ).optional(),
     maxItems: z.number().int().min(1).max(1000).describe(
